@@ -1,0 +1,55 @@
+class Customer:
+    def __init__(self, name, address, phone):
+        self.name = name
+        self.address = address
+        self.phone = phone
+        self.accounts = []
+
+    def create_account(self, account):
+        self.accounts.append(account)
+        print(f"Account {account.account_number} created for {self.name}.")
+
+    def display_accounts(self):
+        print(f"Accounts for {self.name}:")
+        for account in self.accounts:
+            print(f"Account Number: {account.account_number}")
+            print(f"Balance: ${account.balance}")
+            print("")
+
+class BankAccount:
+    account_counter = 1000
+
+    def __init__(self, customer):
+        self.account_number = BankAccount.account_counter
+        BankAccount.account_counter += 1
+        self.customer = customer
+        self.balance = 0
+
+    def deposit(self, amount):
+        self.balance += amount
+        print(f"Deposited ${amount} into Account {self.account_number}. New balance: ${self.balance}.")
+
+    def withdraw(self, amount):
+        if amount > self.balance:
+            print("Insufficient funds.")
+        else:
+            self.balance -= amount
+            print(f"Withdrew ${amount} from Account {self.account_number}. New balance: ${self.balance}.")
+
+# Create customers
+customer1 = Customer("John Smith", "123 Main St", "555-1234")
+customer2 = Customer("Jane Doe", "456 Elm St", "555-5678")
+
+# Create accounts
+account1 = BankAccount(customer1)
+account2 = BankAccount(customer2)
+
+# Perform transactions
+account1.deposit(1000)
+account2.deposit(500)
+account1.withdraw(200)
+account2.withdraw(100)
+
+# Display account information
+customer1.display_accounts()
+customer2.display_accounts()
